@@ -1,0 +1,68 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Card from "../components/Card.astro";
+import Badge from "../components/Badge.astro";
+import SocialIcons from "../components/SocialIcons.astro";
+import Experience from "../components/Experience.astro";
+import Projects from "../components/Projects.astro";
+import Section from "../components/Section.astro";
+import LinkedInIcon from "../components/icons/LinkedIn.astro";
+import GitHubIcon from "../components/icons/Github.astro";
+import InstagramIcon from "../components/icons/Instagram.astro";
+import MailIcon from "../components/icons/Mail.astro";
+import BriefcaseIcon from "../components/icons/BriefCase.astro";
+import CodeIcon from "../components/icons/Code.astro";
+---
+
+<Layout title="Portfolio de José Ochoa - Desarrollador Web" description="Contrata a José Ochoa para crear tu app web. Desarrollador Web (FrontEnd)">
+	<main class="px-4">
+		<Section id="top" class="mx-auto sm:py-[100px] py-[45px]">
+			<h1 class="text-white text-2xl lg:text-5xl font-bold flex flex-row gap-x-4 pb-4">
+				Hey, soy José Ochoa <div class="flex justify-center items-center">
+					<a
+						href="https://www.linkedin.com/in/jos%C3%A9-ochoa-carrillo-a8275a26b/"
+						target="_blank"
+						rel="noopener"
+						class="flex justify-center items-center"
+					>
+						<Badge>Disponible para laborar</Badge></a
+					>
+				</div>
+			</h1>
+			<h2 class="text-xl lg:text-2xl text-wrap pb-4">
+				+2 años de experiencia. <span class="text-purple-700/90">
+					Desarrollador Web. </span
+				>
+                <span class="text-pink-400/70">De Colima, México 🇲🇽</span>
+			</h2>
+			<nav class="flex gap-4 flex-wrap">
+                <SocialIcons href="https://www.linkedin.com/in/jos%C3%A9-ochoa-carrillo-a8275a26b/">
+                    <LinkedInIcon class="sm:size-6 size-4" />
+                    LinkedIn
+                </SocialIcons>
+                <SocialIcons href="https://github.com/Guada8a">
+                    <GitHubIcon class="sm:size-6 size-4" />
+                    GitHub
+                </SocialIcons>
+                <SocialIcons href="https://www.instagram.com/wada8a/">
+                    <InstagramIcon class="sm:size-6 size-4" />
+                    Instagram
+                </SocialIcons>
+                <SocialIcons href="mailto:jochoa10@ucol.mx">
+                    <MailIcon class="size-6" />
+                    jochoa10@ucol.mx
+                </SocialIcons>
+            </nav>
+		</Section>
+        <Section class="mx-auto" id="experiencia">
+            <h2 class="text-2xl lg:text-3xl font-semibold mb-4 flex gap-x-3 items-center">
+                <BriefcaseIcon class="size-8" />Experiencia Laboral</h2>
+            <Experience />
+        </Section>
+        <Section class="mx-auto" id="proyectos">
+            <h2 class="text-2xl lg:text-3xl font-semibold mb-4 flex gap-x-3 items-center">
+                <CodeIcon class="size-8" />Proyectos</h2>
+            <Projects />
+        </Section>
+	</main>
+</Layout>

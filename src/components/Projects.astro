@@ -1,0 +1,80 @@
+---
+import Github from "./icons/Github.astro";
+import SocialIcons from "./SocialIcons.astro";
+import htmlIcon from "./icons/languajes/html.astro"
+import cssIcon from "./icons/languajes/css.astro"
+import jsIcon from "./icons/languajes/js.astro"
+import jqueryIcon from "./icons/languajes/jquery.astro"
+import reactIcon from "./icons/languajes/react.astro"
+import tailwindIcon from "./icons/languajes/tailwindcss.astro"
+import phpIcon from "./icons/languajes/php.astro"
+
+const TAGS = {
+    HTML:{
+        name: "HTML",
+        class: "bg-red-500 text-white",
+        icon: htmlIcon,
+    },
+    CSS:{
+        name: "CSS",
+        class: "bg-blue-500 text-white",
+        icon: cssIcon
+    },
+    JavaScript:{
+        name: "JavaScript",
+        class: "bg-yellow-500 text-black",
+        icon: jsIcon
+    },
+    JQuery:{
+        name: "JQuery",
+        class:"bg-[#0769AD] text-white",
+        icon: jqueryIcon
+    },
+    React:{
+        name: "React",
+        class: "bg-[#61DAFB] text-white",
+        icon: reactIcon
+    },
+    TailwindCSS:{
+        name: "TailwindCSS",
+        class: "bg-[#38B2AC] text-white",
+        icon: tailwindIcon
+    },
+    PHP:{
+        name: "PHP",
+        class: "bg-[#777BB4] text-white",
+        icon: phpIcon
+    }
+}
+const PROJECTS = [
+	{
+		title: "SICEUC - Clon",
+		description: "Nueva Interfaz de SICEUC, con un diseño más apegado a los que se usa actualmente en SICEUC 2 y en la página de la UdeC.",
+		link: "https://guada8a.github.io/SICEUCV2/",
+		github: "https://github.com/Guada8a/SICEUCV2",
+		image: "/projects/422shots_so.jpg",
+		tags: [TAGS.HTML, TAGS.CSS, TAGS.JavaScript, TAGS.PHP],
+	},
+];
+---
+
+{
+	PROJECTS.map(({ image, title, description, tags, github }) => (
+		<article>
+			<h2 class="text-xl font-bold text-purple-700 mb-2">{title}</h2>
+            <img src={image} alt={title} class="rounded shadow-2xl shadow-white/20 mb-2"/>
+			<p class="text-lg mt-4 text-pretty">{description}</p>
+			<ul class="flex gap-x-2 mt-5 justify-center mb-5">
+                Tags: 
+				{tags.map((tag) => (
+					<li>
+                        <span class={`flex gap-x-2 text-xs rounded-full px-2 py-1 items-center ${tag.class}`}>
+                            <tag.icon class="size-4"/>{tag.name}
+                        </span>
+                    </li>
+				))}
+			</ul>
+			<SocialIcons href={github}><Github class="size-6"/>Ver Proyecto</SocialIcons>
+		</article>
+	))
+}
