@@ -12,37 +12,37 @@ import phpIcon from "./icons/languajes/php.astro"
 const TAGS = {
     HTML:{
         name: "HTML",
-        class: "bg-red-500 text-white",
+        class: "bg-red-500/50 text-white",
         icon: htmlIcon,
     },
     CSS:{
         name: "CSS",
-        class: "bg-blue-500 text-white",
+        class: "bg-blue-500/50 text-white",
         icon: cssIcon
     },
     JavaScript:{
         name: "JavaScript",
-        class: "bg-yellow-500 text-black",
+        class: "bg-yellow-500/50 text-white",
         icon: jsIcon
     },
     JQuery:{
         name: "JQuery",
-        class:"bg-[#0769AD] text-white",
+        class:"bg-[#0769AD]/50 text-white",
         icon: jqueryIcon
     },
     React:{
         name: "React",
-        class: "bg-[#61DAFB] text-white",
+        class: "bg-[#61DAFB]/50 text-white",
         icon: reactIcon
     },
     TailwindCSS:{
         name: "TailwindCSS",
-        class: "bg-[#38B2AC] text-white",
+        class: "bg-[#38B2AC]/50 text-white",
         icon: tailwindIcon
     },
     PHP:{
         name: "PHP",
-        class: "bg-[#777BB4] text-white",
+        class: "bg-[#777BB4]/50 text-white",
         icon: phpIcon
     }
 }
@@ -61,11 +61,11 @@ const PROJECTS = [
 {
 	PROJECTS.map(({ image, title, description, tags, github }) => (
 		<article>
-			<h2 class="text-xl font-bold text-purple-700 mb-2">{title}</h2>
+			<h2 class="text-xl font-bold text-purple-300 mb-2">{title}</h2>
             <img src={image} alt={title} class="rounded shadow-2xl shadow-white/20 mb-2"/>
 			<p class="text-lg mt-4 text-pretty">{description}</p>
+            Tags: 
 			<ul class="flex gap-x-2 mt-5 justify-center mb-5">
-                Tags: 
 				{tags.map((tag) => (
 					<li>
                         <span class={`flex gap-x-2 text-xs rounded-full px-2 py-1 items-center ${tag.class}`}>
