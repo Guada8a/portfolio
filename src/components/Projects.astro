@@ -55,12 +55,20 @@ const PROJECTS = [
 		image: "/projects/422shots_so.jpg",
 		tags: [TAGS.HTML, TAGS.CSS, TAGS.JavaScript, TAGS.PHP],
 	},
+    {
+        title: "Sistema de Planeación Académica de Media Superior",
+        description: "Sistema de Planeación Académica de Media Superior, para la planeación de asignaturas de los docentes de la UdeC.",
+        link: "",
+        github: "",
+        image: "/projects/spams.png",
+        tags: [TAGS.HTML, TAGS.CSS, TAGS.JavaScript, TAGS.PHP],
+    }
 ];
 ---
 
 {
 	PROJECTS.map(({ image, title, description, tags, github }) => (
-		<article>
+		<article class="mb-10">
 			<h2 class="text-xl font-bold text-purple-300 mb-2">{title}</h2>
             <img src={image} alt={title} class="rounded shadow-2xl shadow-white/20 mb-2"/>
 			<p class="text-lg mt-4 text-pretty">{description}</p>
@@ -74,7 +82,12 @@ const PROJECTS = [
                     </li>
 				))}
 			</ul>
-			<SocialIcons href={github}><Github class="size-6"/>Ver Proyecto</SocialIcons>
+            {github !== "" && (
+                <SocialIcons href={github}>
+                    <Github class="size-6" />
+                    Ver Proyecto
+                </SocialIcons>
+            )}
 		</article>
 	))
 }
