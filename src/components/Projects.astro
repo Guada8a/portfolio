@@ -8,8 +8,8 @@ import jqueryIcon from "./icons/languajes/jquery.astro"
 import reactIcon from "./icons/languajes/react.astro"
 import tailwindIcon from "./icons/languajes/tailwindcss.astro"
 import phpIcon from "./icons/languajes/php.astro"
-import Link from "./icons/Link.astro";
 import CodeIcon from "./icons/Code.astro";
+import ViteIcon from "./icons/languajes/vite.astro";
 
 const TAGS = {
     HTML:{
@@ -46,6 +46,11 @@ const TAGS = {
         name: "PHP",
         class: "bg-[#777BB4]/50 text-white",
         icon: phpIcon
+    },
+    Vite:{
+        name: "Vite JS",
+        class: "bg-[#9514d3]/50 text-white",
+        icon: ViteIcon
     }
 }
 const PROJECTS = [
@@ -66,12 +71,12 @@ const PROJECTS = [
         tags: [TAGS.HTML, TAGS.CSS, TAGS.JavaScript, TAGS.PHP],
     },
 	{
-		title: "Puerto Inteligente Seguro (PIS)",
+		title: "Puerto Inteligente Seguro (PIS) (Colaboración) ",
 		description: "Módulo de Archivo de la Aplicación de Puerto Inteligente Seguro (PIS).",
 		link: "https://www.puertointeligenteseguro.com.mx/#/login",
 		github: "",
 		image: "/projects/pis.png",
-		tags: [TAGS.React, TAGS.PHP],
+		tags: [TAGS.React, TAGS.Vite],
 	}
 ];
 ---
