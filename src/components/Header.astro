@@ -1,19 +1,51 @@
 ---
-import Button from "./icons/Button.astro"
+import Button from "./icons/Button.astro";
+
+let isOpen = false;
+
+function toggleMenu() {
+    isOpen = !isOpen;
+    const menu = document.getElementById('mobile-menu');
+    if (menu) {
+        if (isOpen) {
+            menu.classList.remove('hidden');
+            menu.classList.add('bg-slate-700/20');
+        } else {
+            menu.classList.add('hidden');
+            menu.classList.remove('bg-slate-700/20');
+        }
+    }
+}
 ---
-<header
-    class="sticky top-0 mx-auto bg-slate-700/20 backdrop-blur-2xl z-40 w-full"
->
-    <div class="container mx-auto px-4 py-5 flex flex-col md:flex-row justify-between items-center">
-        <a href="#top" class="mb-4 md:mb-0">
+
+<header class="sticky top-0 mx-auto backdrop-blur-2xl z-40 w-full">
+    <div class="container mx-auto px-4 py-5 flex justify-between items-center">
+        <a href="#top">
             <img
                 class="rounded-full size-12"
                 src="https://avatars.githubusercontent.com/u/75002967?v=4"
                 alt="logo"
             />
         </a>
+        <button id="menu-button" class="md:hidden text-white">
+            <svg
+                class="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
+                ></path>
+            </svg>
+        </button>
         <nav
-            class="flex flex-col sm:flex-row gap-4 md:gap-6 text-center"
+            id="mobile-menu"
+            class="hidden md:flex flex-col md:flex-row gap-4 md:gap-6 text-center absolute md:relative top-16 md:top-0 left-0 md:left-auto right-0 md:right-auto md:bg-transparent md:backdrop-blur-none w-full md:w-auto px-4 md:px-0 py-4 md:py-0"
         >
             <Button href="#top">Inicio</Button>
             <Button href="#about">Sobre mí</Button>
@@ -23,3 +55,19 @@ import Button from "./icons/Button.astro"
         </nav>
     </div>
 </header>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const menuButton = document.getElementById('menu-button');
+        if (menuButton) {
+            menuButton.addEventListener('click', () => {
+                const menu = document.getElementById('mobile-menu');
+                if (menu) {
+                    menu.classList.toggle('hidden');
+                    menu.classList.toggle('bg-slate-700/20');
+                    menu.classList.toggle('backdrop-blur-2xl');
+                }
+            });
+        }
+    });
+</script>
