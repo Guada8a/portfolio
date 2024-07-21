@@ -21,7 +21,9 @@ const { description, title } = Astro.props;
         <title>{title}</title>
     </head>
     <body>
-        <div class="fixed top-0 left-0 z-[-2] h-full w-full bg-neutral-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
+        <div id="stars"></div>
+        <div id="stars2"></div>
+        <div id="stars3"></div>
         <Header />
         <slot />
         <Footer />
@@ -29,24 +31,72 @@ const { description, title } = Astro.props;
 </html>
 <style is:global>
     :root {
-        color-scheme: light dark;
+        color-scheme: dark;
     }
     html {
         font-family: 'Onest Variable', system-ui, sans-serif;
         scroll-behavior: smooth;
     }
     body {
-        background: #050505;
+        background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+        color: #fff;
         display: flex;
         flex-direction: column;
         min-height: 100vh;
         margin: 0;
         position: relative;
+        overflow-x: hidden;
+    }
+
+    #stars, #stars2, #stars3 {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: -1;
+        overflow: hidden;
+    }
+
+    #stars {
+        width: 1px;
+        height: 1px;
+        background: transparent;
+        box-shadow: 1560px 989px #FFF , 1569px 834px #FFF , 452px 605px #FFF;
+        animation: animStar 50s linear infinite;
+    }
+
+    #stars2 {
+        width: 2px;
+        height: 2px;
+        background: transparent;
+        box-shadow: 1327px 578px #FFF , 1761px 950px #FFF , 1332px 714px #FFF;
+        animation: animStar 100s linear infinite;
+    }
+
+    #stars3 {
+        width: 3px;
+        height: 3px;
+        background: transparent;
+        box-shadow: 1359px 843px #FFF , 1773px 1687px #FFF , 1635px 1783px #FFF;
+        animation: animStar 150s linear infinite;
+    }
+
+    @keyframes animStar {
+        from {
+            transform: translateY(0px);
+        }
+        to {
+            transform: translateY(-2000px);
+        }
     }
 
     @media (prefers-reduced-motion: reduce) {
         html {
             scroll-behavior: auto;
+        }
+        #stars, #stars2, #stars3 {
+            animation: none;
         }
     }
 </style>

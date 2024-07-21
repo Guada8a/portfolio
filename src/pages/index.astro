@@ -1,11 +1,9 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Card from "../components/Card.astro";
 import Badge from "../components/Badge.astro";
 import SocialIcons from "../components/SocialIcons.astro";
 import Experience from "../components/Experience.astro";
 import Projects from "../components/Projects.astro";
-import Section from "../components/Section.astro";
 import LinkedInIcon from "../components/icons/LinkedIn.astro";
 import GitHubIcon from "../components/icons/Github.astro";
 import InstagramIcon from "../components/icons/Instagram.astro";
@@ -17,85 +15,178 @@ import AddressIcon from "../components/icons/Address.astro";
 import WhatsAppIcon from "../components/icons/WhatsappIcon.astro";
 ---
 
-<Layout title="Portfolio de José Ochoa - Desarrollador Web" description="Contrata a José Ochoa para crear tu app web. Desarrollador Web (FrontEnd)">
-	<main class="px-4">
-		<Section id="top" class="mx-auto sm:py-[100px] py-[45px]">
-			<h1 class="text-white text-2xl lg:text-5xl font-bold flex flex-row gap-x-4 pb-4">
-				Hey, soy José Ochoa <div class="flex justify-center items-center">
-					<a
-						href="https://www.linkedin.com/in/jos%C3%A9-ochoa-carrillo-a8275a26b/"
-						target="_blank"
-						rel="noopener"
-						class="flex justify-center items-center"
-					>
-						<Badge>Disponible para laborar</Badge></a
-					>
+<Layout
+	title="Portfolio de José Ochoa - Desarrollador Web"
+	description="Contrata a José Ochoa para crear tu app web. Desarrollador Web (FrontEnd)"
+>
+	<main class="px-4 py-12 max-w-7xl mx-auto">
+		<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+			<!-- Header Section - Span full width -->
+			<div
+				class="col-span-full bg-gradient-to-r from-purple-700/30 to-pink-600/30 rounded-3xl p-8 text-white mb-8 backdrop-blur-md border border-white/10 shadow-lg"
+			>
+				<div class="max-w-3xl mx-auto text-center">
+					<h1 class="text-5xl font-bold mb-4 animate-fade-in">
+						Hey, soy José Ochoa
+					</h1>
+					<h2 class="text-2xl mb-6 animate-fade-in-delay">
+						<span class="text-purple-300">Desarrollador Web</span> con
+						<span class="text-pink-300">+3 años de experiencia</span>
+					</h2>
+					<p class="text-xl mb-6 animate-fade-in-delay-2">
+						Creando experiencias web innovadoras desde Colima, México 🇲🇽
+					</p>
+					<p class="text-xl mb-6 animate-fade-in-delay-2">
+						<Badge class="animate-fade-in-delay-3"
+							>Disponible para laborar</Badge
+						>
+					</p>
 				</div>
-			</h1>
-			<h2 class="text-xl lg:text-2xl text-wrap pb-4">
-				+3 años de experiencia. <span class="text-purple-300/90">
-					Desarrollador Web. </span
-				>
-                <span class="text-pink-400/70">De Colima, México 🇲🇽</span>
-			</h2>
-			<nav class="flex gap-4 flex-wrap">
-                <SocialIcons href="https://www.linkedin.com/in/jos%C3%A9-ochoa-carrillo-a8275a26b/" class="hover:bg-[#0a66c2]">
-                    <LinkedInIcon class="sm:size-5 size-4" />
-                    LinkedIn
-                </SocialIcons>
-                <SocialIcons href="https://github.com/Guada8a" class="hover:bg-[#814d9d]">
-                    <GitHubIcon class="sm:size-5 size-4" />
-                    GitHub
-                </SocialIcons>
-                <SocialIcons href="https://wa.me/523122419442?text=Chatear%20con%20Jose%20Ochoa" class="hover:bg-[#00e677b7] hover:text-white">
-                    <WhatsAppIcon class="sm:size-6 size-5" />
-                    WhatsApp
-                </SocialIcons>
-                    <SocialIcons href="https://www.instagram.com/wada8a/" class="bg-gradient-to-r from-white/10 to-white/10 hover:from-[#405DE6] hover:via-[#5B51D8] hover:via-[#833AB4] hover:via-[#C13584] hover:via-[#E1306C] hover:via-[#FD1D1D] hover:via-[#F56040] hover:via-[#777737] hover:via-[#FCAF45] hover:to-[#FFDC80]">
-                    <InstagramIcon class="sm:size-5 size-4" />
-                    Instagram
-                </SocialIcons>
-                <SocialIcons href="mailto:jochoa10@ucol.mx" class="hover:bg-red-600/40">
-                    <MailIcon class="sm:size-5 size-4" />
-                    jochoa10@ucol.mx
-                </SocialIcons>
-            </nav>
-		</Section>
-        <Section class="mx-auto mb-10" id="about">
-            <h2 class="text-2xl lg:text-3xl font-semibold mb-4 flex gap-x-3 items-center">
-                <UserIcon class="size-8" />Sobre mí</h2>
-            <p class="text-lg lg:text-xl text-pretty">
-                Soy un desarrollador web con más de 2 años de experiencia. Mi objetivo es crear aplicaciones web rápidas, intuitivas y accesibles para todos. Me apasiona aprender nuevas tecnologías y compartir mis conocimientos. Actualmente, estoy estudiando Ingeniería de Software en la Universidad de Colima.
-            </p>
-        </Section>
-        <Section class="mx-auto" id="experiencia">
-            <h2 class="text-2xl lg:text-3xl font-semibold mb-4 flex gap-x-3 items-center">
-                <BriefcaseIcon class="size-8" />Experiencia Laboral</h2>
-            <Experience />
-        </Section>
-        <Section class="mx-auto mb-10" id="proyectos">
-            <h2 class="text-2xl lg:text-3xl font-semibold mb-4 flex gap-x-3 items-center">
-                <CodeIcon class="size-8" />Proyectos</h2>
-            <Projects />
-        </Section>
-        <Section class="mx-auto" id="contacto">
-            <h2 class="text-2xl lg:text-3xl font-semibold mb-4 flex gap-x-3 items-center">
-                <AddressIcon class="size-8" />Contacto</h2>
-            <p class="text-lg lg:text-xl text-pretty">
-                Si deseas contactarme puedes hacerlo a través de mis redes
-                sociales o enviándome un correo electrónico a
-                <div class="flex gap-x-5 mt-2 mx-auto justify-center">
-                    <SocialIcons href="mailto:jochoa10@ucol.mx" class="hover:bg-[#a2bf41]">
-                        <MailIcon class="sm:size-5 size-4" />
-                        jochoa10@ucol.mx
-                    </SocialIcons>
-                    <SocialIcons href="mailto:ochoag2803@gmail.com" class="hover:bg-red-600/40">
-                        <MailIcon class="sm:size-5 size-4" />
-                        ochoag2803@gmail.com
-                    </SocialIcons>
-                </div>
-            </p>
+				<div class="flex flex-wrap justify-center items-center gap-4">
+					<SocialIcons
+						href="https://www.linkedin.com/in/jos%C3%A9-ochoa-carrillo-a8275a26b/"
+						class="hover:bg-[#0a66c2]/70 transition-colors duration-300"
+					>
+						<LinkedInIcon class="size-6" />
+						<span class="sr-only">LinkedIn</span>
+					</SocialIcons>
+					<SocialIcons
+						href="https://github.com/Guada8a"
+						class="hover:bg-[#814d9d]/70 transition-colors duration-300"
+					>
+						<GitHubIcon class="size-6" />
+						<span class="sr-only">GitHub</span>
+					</SocialIcons>
+					<SocialIcons
+						href="https://wa.me/523122419442?text=Chatear%20con%20Jose%20Ochoa"
+						class="hover:bg-[#00e677]/70 transition-colors duration-300"
+					>
+						<WhatsAppIcon class="size-6" />
+						<span class="sr-only">WhatsApp</span>
+					</SocialIcons>
+					<SocialIcons
+						href="https://www.instagram.com/wada8a/"
+						class="hover:bg-gradient-to-r from-[#405DE6]/70 to-[#5851DB]/70 transition-colors duration-300"
+					>
+						<InstagramIcon class="size-6" />
+						<span class="sr-only">Instagram</span>
+					</SocialIcons>
+					<SocialIcons
+						href="mailto:jochoa10@ucol.mx"
+						class="hover:bg-red-600/50 transition-colors duration-300"
+					>
+						<MailIcon class="size-6" />
+						<span class="sr-only">Email</span>
+					</SocialIcons>
+				</div>
+			</div>
 
-        </Section>
+			<!-- About Me Section -->
+			<div
+				id="about"
+				class="lg:col-span-4 backdrop-blur-lg bg-white/10 rounded-3xl p-6 hover:shadow-xl transition-all duration-300 border border-white/20"
+			>
+				<h2 class="text-2xl font-semibold mb-4 flex items-center">
+					<UserIcon class="size-6 mr-2" />Sobre mí
+				</h2>
+				<p class="text-sm leading-relaxed">
+					Soy un desarrollador web apasionado con una misión: crear aplicaciones
+					web rápidas, intuitivas y accesibles para todos. Con más de 3 años de
+					experiencia, me especializo en transformar ideas en soluciones
+					digitales impactantes. Siempre estoy en busca de nuevos desafíos y
+					oportunidades para aprender y crecer en el siempre cambiante mundo del
+					desarrollo web.
+				</p>
+			</div>
+
+			<!-- Experience Section -->
+			<div
+				id="experiencia"
+				class="col-span-full lg:col-span-2 backdrop-blur-lg bg-white/10 rounded-3xl p-6 hover:shadow-xl transition-all duration-300 border border-white/20"
+			>
+				<h2 class="text-2xl font-semibold mb-4 flex items-center">
+					<BriefcaseIcon class="size-6 mr-2" />Experiencia Laboral
+				</h2>
+				<Experience />
+			</div>
+
+			<!-- Projects Section -->
+			<div
+				id="proyectos"
+				class="col-span-full lg:col-span-2 backdrop-blur-lg bg-white/10 rounded-3xl p-6 hover:shadow-xl transition-all duration-300 border border-white/20"
+			>
+				<h2 class="text-2xl font-semibold mb-4 flex items-center">
+					<CodeIcon class="size-6 mr-2" />Proyectos
+				</h2>
+				<Projects />
+			</div>
+
+			<!-- Contact Section -->
+			<div
+				id="contacto"
+				class="col-span-full backdrop-blur-lg bg-white/10 rounded-3xl p-6 hover:shadow-xl transition-all duration-300 border border-white/20"
+			>
+				<h2 class="text-2xl font-semibold mb-4 flex items-center">
+					<AddressIcon class="size-6 mr-2" />Contacto
+				</h2>
+				<p class="text-sm mb-4 text-center">
+					¿Interesado en colaborar o tienes alguna pregunta? ¡No dudes en
+					contactarme!
+				</p>
+				<div class="flex flex-col sm:flex-row justify-center gap-4">
+					<!-- Contact buttons here -->
+					<SocialIcons
+						href="mailto:jochoa10@ucol.mx"
+						class="hover:bg-[#a2bf41]/70 transition-colors duration-300"
+					>
+						<MailIcon class="size-4 mr-2" />
+						jochoa10@ucol.mx
+					</SocialIcons>
+					<SocialIcons
+						href="mailto:ochoag2803@gmail.com"
+						class="hover:bg-red-600/50 transition-colors duration-300"
+					>
+						<MailIcon class="size-4 mr-2" />
+						ochoag2803@gmail.com
+					</SocialIcons>
+				</div>
+			</div>
+		</div>
 	</main>
 </Layout>
+
+<style>
+	.glass-card {
+		background: rgba(255, 255, 255, 0.8);
+		backdrop-filter: blur(100px);
+		border: none;
+		box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+	}
+
+	.animate-fade-in {
+		animation: fadeIn 0.8s ease-out;
+	}
+
+	.animate-fade-in-delay {
+		animation: fadeIn 0.8s ease-out 0.2s both;
+	}
+
+	.animate-fade-in-delay-2 {
+		animation: fadeIn 0.8s ease-out 0.4s both;
+	}
+
+	.animate-fade-in-delay-3 {
+		animation: fadeIn 0.8s ease-out 0.6s both;
+	}
+
+	@keyframes fadeIn {
+		from {
+			opacity: 0;
+			transform: translateY(60px);
+		}
+		to {
+			opacity: 0.4;
+			transform: translateY(0);
+		}
+	}
+</style>
