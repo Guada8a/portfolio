@@ -12,56 +12,57 @@ import CodeIcon from "./icons/Code.astro";
 import ViteIcon from "./icons/languajes/vite.astro";
 
 const TAGS = {
-    HTML:{
+    HTML: {
         name: "HTML",
         class: "bg-red-500/50 text-white",
         icon: htmlIcon,
     },
-    CSS:{
+    CSS: {
         name: "CSS",
         class: "bg-blue-500/50 text-white",
         icon: cssIcon
     },
-    JavaScript:{
+    JavaScript: {
         name: "JavaScript",
         class: "bg-yellow-500/50 text-white",
         icon: jsIcon
     },
-    JQuery:{
+    JQuery: {
         name: "JQuery",
-        class:"bg-[#0769AD]/50 text-white",
+        class: "bg-[#0769AD]/50 text-white",
         icon: jqueryIcon
     },
-    React:{
+    React: {
         name: "React",
         class: "bg-[#61DAFB]/50 text-white",
         icon: reactIcon
     },
-    TailwindCSS:{
+    TailwindCSS: {
         name: "TailwindCSS",
         class: "bg-[#38B2AC]/50 text-white",
         icon: tailwindIcon
     },
-    PHP:{
+    PHP: {
         name: "PHP",
         class: "bg-[#777BB4]/50 text-white",
         icon: phpIcon
     },
-    Vite:{
+    Vite: {
         name: "Vite JS",
         class: "bg-[#9514d3]/50 text-white",
         icon: ViteIcon
     }
 }
+
 const PROJECTS = [
-	{
-		title: "SICEUC - Clon",
-		description: "Nueva Interfaz de SICEUC, con un diseño más apegado a los que se usa actualmente en SICEUC 2 y en la página de la UdeC.",
-		link: "https://guada8a.github.io/SICEUCV2/",
-		github: "https://github.com/Guada8a/SICEUCV2",
-		image: "/portfolio/projects/422shots_so.jpg",
-		tags: [TAGS.HTML, TAGS.CSS, TAGS.JavaScript, TAGS.PHP],
-	},
+    {
+        title: "SICEUC - Clon",
+        description: "Nueva Interfaz de SICEUC, con un diseño más apegado a los que se usa actualmente en SICEUC 2 y en la página de la UdeC.",
+        link: "https://guada8a.github.io/SICEUCV2/",
+        github: "https://github.com/Guada8a/SICEUCV2",
+        image: "/portfolio/projects/422shots_so.jpg",
+        tags: [TAGS.HTML, TAGS.CSS, TAGS.JavaScript, TAGS.PHP],
+    },
     {
         title: "Sistema de Planeación Académica de Media Superior",
         description: "Sistema de Planeación Académica de Media Superior, para la planeación de asignaturas de los docentes de la UdeC.",
@@ -70,45 +71,59 @@ const PROJECTS = [
         image: "/portfolio/projects/spams.png",
         tags: [TAGS.HTML, TAGS.CSS, TAGS.JavaScript, TAGS.PHP, TAGS.JQuery, TAGS.Vite],
     },
-	{
-		title: "Puerto Inteligente Seguro (PIS) (Colaboración) ",
-		description: "Módulos para el Puerto Inteligente Seguro (PIS).",
-		link: "https://www.puertointeligenteseguro.com.mx/#/login",
-		github: "",
-		image: "/portfolio/projects/pis.png",
-		tags: [TAGS.React, TAGS.Vite],
-	}
+    {
+        title: "Puerto Inteligente Seguro (PIS) (Colaboración) ",
+        description: "Módulos para el Puerto Inteligente Seguro (PIS).",
+        link: "https://www.puertointeligenteseguro.com.mx/#/login",
+        github: "",
+        image: "/portfolio/projects/pis.png",
+        tags: [TAGS.React, TAGS.Vite],
+    }
 ];
+
 ---
 
 {
-	PROJECTS.map(({ image, title, description, tags, github, link }) => (
-		<article class="mb-10">
-			<h2 class="text-xl font-bold text-purple-300 mb-2">{title}</h2>
-            <img src={image} alt={title} class="rounded shadow-2xl shadow-white/20 mb-2"/>
-			<p class="text-lg mt-4 text-pretty">{description}</p>
-            Tags: 
-			<ul class="flex gap-x-2 mt-5 justify-center mb-5">
-				{tags.map((tag) => (
-					<li>
-                        <span class={`flex gap-x-2 text-xs rounded-full px-2 py-1 items-center ${tag.class}`}>
-                            <tag.icon class="size-4"/>{tag.name}
-                        </span>
-                    </li>
-				))}
-			</ul>
-			{link !== "" && (
-				<SocialIcons href={link}>
-					<CodeIcon class="size-6" />
-					Ver Proyecto
-				</SocialIcons>
-			)}
-            {github !== "" && (
-                <SocialIcons href={github}>
-                    <Github class="size-6" />
-                    Ver Repositorio
-                </SocialIcons>
+    PROJECTS.map(({ image, title, description, tags, github, link }) => (
+        <article class="mb-10">
+            <h2 class="text-xl font-bold text-indigo-400 mb-2">{title}</h2>
+            <img src={image} alt={title} class="rounded shadow-2xl shadow-white/20 mb-2" />
+            <p class="text-lg mt-4 text-pretty">{description}</p>
+            <div class="flex gap-x-2 mt-5 justify-center mb-5">
+                Tags:
+                {tags.map((tag) => (
+                    <div class={`flex gap-x-2 text-xs rounded-md px-2 py-1 items-center ${tag.class} shadow-sm`}>
+                        <tag.icon class="size-4" />{tag.name}
+                    </div>
+                ))}
+            </div>
+            {link !== "" && github !== "" ? (
+                <div class="flex gap-x-4">
+                    <SocialIcons href={link} class="w-1/2">
+                        <CodeIcon class="size-6" />
+                        Ver Proyecto
+                    </SocialIcons>
+                    <SocialIcons href={github} class="w-1/2">
+                        <Github class="size-6" />
+                        Ver Repositorio
+                    </SocialIcons>
+                </div>
+            ) : (
+                <>
+                    {link !== "" && (
+                        <SocialIcons href={link}>
+                            <CodeIcon class="size-6" />
+                            Ver Proyecto
+                        </SocialIcons>
+                    )}
+                    {github !== "" && (
+                        <SocialIcons href={github}>
+                            <Github class="size-6" />
+                            Ver Repositorio
+                        </SocialIcons>
+                    )}
+                </>
             )}
-		</article>
-	))
+        </article>
+    ))
 }
