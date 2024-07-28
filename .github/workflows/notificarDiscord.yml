@@ -70,8 +70,11 @@ jobs:
                 "icon_url": "https://github.com/$AUTHOR_USERNAME.png"
               },
               "footer": {
-                "text": "GitHub Actions • $TIMESTAMP"
-              }
+                "text": "GitHub Actions",
+                "icon_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+                },
+                "timestamp": "$TIMESTAMP"
+
             }]
           }
           EOF
