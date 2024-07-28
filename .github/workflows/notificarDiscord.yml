@@ -30,6 +30,7 @@ jobs:
           }
 
           BRANCH_COLOR=$(generate_color "$BRANCH")
+          REPO_COLOR=$(generate_color "$REPO_NAME")
 
           # Detectar si hay un número de issue en el mensaje del commit
           if [[ $COMMIT_MESSAGE =~ \#([0-9]+) ]]; then
@@ -46,13 +47,17 @@ jobs:
           JSON_PAYLOAD=$(cat <<EOF
           {
             "embeds": [{
-              "title": "Repositorio: $REPO_NAME",
+              "title": "Repositorio: \`\`\`ansi\n[0;30;43m $REPO_NAME \u001b[0m\`\`\`",
               "url": "$COMMIT_URL",
               "color": $BRANCH_COLOR,
               "fields": [
                 {
                   "name": "Mensaje del commit",
                   "value": "\`\`\`$COMMIT_MESSAGE\`\`\`"
+                },
+                {
+                  "name": "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬",
+                  "value": "\u200b"
                 },
                 {
                   "name": "Rama",
