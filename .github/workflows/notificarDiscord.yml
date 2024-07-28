@@ -18,8 +18,11 @@ jobs:
         run: |
           COMMIT_MESSAGE=$(git log -1 --pretty=%B)
           AUTHOR=$(git log -1 --pretty=format:'%an')
+          AUTHOR_AVATAR=$(git log -1 --pretty=format:'%ae' | md5sum | cut -d' ' -f1)
           BRANCH=$(echo ${{ github.ref }} | awk -F'/' '{print $NF}')
           REPO_NAME=$(echo ${{ github.repository }} | awk -F'/' '{print $NF}')
+          COMMIT_URL="${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}"
+          TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 
           ISSUE_TEXT=""
           if [[ $COMMIT_MESSAGE =~ \#([0-9]+) ]]; then
@@ -40,38 +43,51 @@ jobs:
 
           if [[ $BRANCH == "pre" ]]; then
             MESSAGE="$AUTHOR subió cambios a PRE"
+            COLOR=15105570  # Oro
           elif [[ $BRANCH == "dev" ]]; then
             MESSAGE="Los cambios están en $BRANCH"
+            COLOR=3066993   # Verde
           else
             if [[ -n $ISSUE_TEXT ]]; then
               MESSAGE="$AUTHOR subió cambios$ISSUE_TEXT en la rama $BRANCH"
             else
               MESSAGE="$AUTHOR subió cambios en la rama $BRANCH"
             fi
+            COLOR=3447003   # Azul
           fi
 
           JSON_PAYLOAD=$(cat <<EOF
           {
             "embeds": [{
-              "title": "$REPO_NAME: Nuevo commit",
+              "title": "Nuevo commit en $REPO_NAME",
               "description": "$MESSAGE",
-              "color": 3447003,
+              "url": "$COMMIT_URL",
+              "color": $COLOR,
               "fields": [
                 {
                   "name": "Mensaje del commit",
-                  "value": "$COMMIT_MESSAGE"
+                  "value": "\`\`\`$COMMIT_MESSAGE\`\`\`"
+                },
+                {
+                  "name": "Rama",
+                  "value": "\`$BRANCH\`",
+                  "inline": true
                 },
                 {
                   "name": "Autor",
                   "value": "$AUTHOR",
                   "inline": true
-                },
-                {
-                  "name": "Rama",
-                  "value": "$BRANCH",
-                  "inline": true
                 }
-              ]
+              ],
+              "author": {
+                "name": "$AUTHOR",
+                "icon_url": "https://www.gravatar.com/avatar/$AUTHOR_AVATAR?d=identicon"
+              },
+              "footer": {
+                "text": "GitHub Actions",
+                "icon_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+              },
+              "timestamp": "$TIMESTAMP"
             }]
           }
           EOF
