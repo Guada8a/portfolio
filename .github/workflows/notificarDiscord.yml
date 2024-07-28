@@ -16,6 +16,8 @@ jobs:
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         run: |
+          echo "Iniciando script de notificación"
+
           COMMIT_MESSAGE=$(git log -1 --pretty=%B)
           AUTHOR=$(git log -1 --pretty=format:'%an')
           AUTHOR_USERNAME=$(echo "${{ github.actor }}")
@@ -24,49 +26,42 @@ jobs:
           COMMIT_URL="${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}"
           TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 
-          # Función para generar un color basado en el nombre de la rama
-          function generate_color {
-            echo $(( 0x$(echo -n "$1" | md5sum | cut -c1-6) ))
-          }
+          echo "Información extraída:"
+          echo "Commit Message: $COMMIT_MESSAGE"
+          echo "Author: $AUTHOR"
+          echo "Branch: $BRANCH"
+          echo "Repo Name: $REPO_NAME"
 
-          BRANCH_COLOR=$(generate_color "$BRANCH")
-
-          # Detectar si hay un número de issue en el mensaje del commit
-          if [[ $COMMIT_MESSAGE =~ \#([0-9]+) ]]; then
-            ISSUE_NUMBER="${BASH_REMATCH[1]}"
-            ISSUE_FIELD=',"value": "📌 #'"$ISSUE_NUMBER"'"'
-          else
-            ISSUE_FIELD=''
-          fi
-
+          # Simplificar el payload para depuración
           JSON_PAYLOAD=$(cat <<EOF
           {
             "embeds": [{
               "title": "📂 Repositorio: $REPO_NAME",
-              "url": "$COMMIT_URL",
-              "color": $BRANCH_COLOR,
-              "fields": [
-                {
-                  "name": "💬 Mensaje del commit",
-                  "value": "$COMMIT_MESSAGE"
-                },
-                {
-                  "name": "\u200b",
-                  "value": "🌿 \`$BRANCH\`     👤 $AUTHOR$ISSUE_FIELD",
-                  "inline": false
-                }
-              ],
-              "author": {
-                "name": "$AUTHOR",
-                "icon_url": "https://github.com/$AUTHOR_USERNAME.png"
-              },
+              "description": "💬 $COMMIT_MESSAGE\n🌿 \`$BRANCH\`  👤 $AUTHOR",
+              "color": 3447003,
               "footer": {
-                "text": "GitHub Actions • $TIMESTAMP",
-                "icon_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+                "text": "GitHub Actions • $TIMESTAMP"
               }
             }]
           }
           EOF
           )
 
-          curl -H "Content-Type: application/json" -d "$JSON_PAYLOAD" $DISCORD_WEBHOOK
+          echo "JSON Payload:"
+          echo "$JSON_PAYLOAD"
+
+          echo "Enviando notificación a Discord..."
+          RESPONSE=$(curl -s -w "\n%{http_code}" -H "Content-Type: application/json" -d "$JSON_PAYLOAD" $DISCORD_WEBHOOK)
+          HTTP_STATUS=$(echo "$RESPONSE" | tail -n1)
+          BODY=$(echo "$RESPONSE" | sed '$d')
+
+          echo "Respuesta de Discord:"
+          echo "Estado HTTP: $HTTP_STATUS"
+          echo "Cuerpo de la respuesta: $BODY"
+
+          if [ "$HTTP_STATUS" -eq 204 ]; then
+            echo "Notificación enviada exitosamente"
+          else
+            echo "Error al enviar la notificación"
+            exit 1
+          fi
