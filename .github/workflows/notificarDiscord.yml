@@ -18,51 +18,18 @@ jobs:
         run: |
           COMMIT_MESSAGE=$(git log -1 --pretty=%B)
           AUTHOR=$(git log -1 --pretty=format:'%an')
-          AUTHOR_AVATAR=$(git log -1 --pretty=format:'%ae' | md5sum | cut -d' ' -f1)
+          AUTHOR_USERNAME=$(echo "${{ github.event.head_commit.author.username }}")
           BRANCH=$(echo ${{ github.ref }} | awk -F'/' '{print $NF}')
           REPO_NAME=$(echo ${{ github.repository }} | awk -F'/' '{print $NF}')
           COMMIT_URL="${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}"
           TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 
-          ISSUE_TEXT=""
-          if [[ $COMMIT_MESSAGE =~ \#([0-9]+) ]]; then
-            ISSUE_TEXT=" en el issue"
-            if [[ $(echo $COMMIT_MESSAGE | grep -o '#' | wc -l) -gt 1 ]]; then
-              ISSUE_TEXT=" con ref. en los issues"
-            fi
-            while [[ $COMMIT_MESSAGE =~ \#([0-9]+) ]]; do
-              ISSUE_NUMBER="${BASH_REMATCH[1]}"
-              if [[ -z $ISSUE_TEXT ]]; then
-                ISSUE_TEXT="#$ISSUE_NUMBER"
-              else
-                ISSUE_TEXT="$ISSUE_TEXT #$ISSUE_NUMBER"
-              fi
-              COMMIT_MESSAGE=${COMMIT_MESSAGE#*#}
-            done
-          fi
-
-          if [[ $BRANCH == "pre" ]]; then
-            MESSAGE="$AUTHOR subió cambios a PRE"
-            COLOR=15105570  # Oro
-          elif [[ $BRANCH == "dev" ]]; then
-            MESSAGE="Los cambios están en $BRANCH"
-            COLOR=3066993   # Verde
-          else
-            if [[ -n $ISSUE_TEXT ]]; then
-              MESSAGE="$AUTHOR subió cambios$ISSUE_TEXT en la rama $BRANCH"
-            else
-              MESSAGE="$AUTHOR subió cambios en la rama $BRANCH"
-            fi
-            COLOR=3447003   # Azul
-          fi
-
           JSON_PAYLOAD=$(cat <<EOF
           {
             "embeds": [{
-              "title": "Nuevo commit en $REPO_NAME",
-              "description": "$MESSAGE",
+              "title": "Repositorio: $REPO_NAME",
               "url": "$COMMIT_URL",
-              "color": $COLOR,
+              "color": 3447003,
               "fields": [
                 {
                   "name": "Mensaje del commit",
@@ -72,16 +39,11 @@ jobs:
                   "name": "Rama",
                   "value": "\`$BRANCH\`",
                   "inline": true
-                },
-                {
-                  "name": "Autor",
-                  "value": "$AUTHOR",
-                  "inline": true
                 }
               ],
               "author": {
                 "name": "$AUTHOR",
-                "icon_url": "https://www.gravatar.com/avatar/$AUTHOR_AVATAR?d=identicon"
+                "icon_url": "https://avatars.githubusercontent.com/u/$AUTHOR_USERNAME?v=4"
               },
               "footer": {
                 "text": "GitHub Actions",
