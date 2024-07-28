@@ -33,7 +33,7 @@ jobs:
           if [[ $COMMIT_MESSAGE =~ \#([0-9]+) ]]; then
             ISSUE_NUMBER="${BASH_REMATCH[1]}"
             ISSUE_FIELD=',{
-              "name": "<:issue:1234567890> Issue",
+              "name": ":pushpin: Issue",
               "value": "#'"$ISSUE_NUMBER"'",
               "inline": true
             }'
@@ -44,22 +44,22 @@ jobs:
           JSON_PAYLOAD=$(cat <<EOF
           {
             "embeds": [{
-              "title": "Repositorio: $REPO_NAME",
-              "description": "Se ha realizado un nuevo push en la rama \`$BRANCH\`.",
+              "title": "**Repositorio:**",
+              "description": "**$REPO_NAME**",
               "url": "$COMMIT_URL",
               "color": $BRANCH_COLOR,
               "fields": [
                 {
-                  "name": "<:commit:1234567890> Mensaje del commit",
+                  "name": ":memo: Mensaje del commit",
                   "value": "\`\`\`$COMMIT_MESSAGE\`\`\`"
                 },
                 {
-                  "name": "<:branch:1234567890> Rama",
+                  "name": ":twisted_rightwards_arrows: Rama",
                   "value": "\`$BRANCH\`",
                   "inline": true
                 },
                 {
-                  "name": "<:user:1234567890> Autor",
+                  "name": ":bust_in_silhouette: Autor",
                   "value": "$AUTHOR",
                   "inline": true
                 }
