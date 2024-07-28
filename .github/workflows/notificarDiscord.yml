@@ -34,47 +34,36 @@ jobs:
           # Detectar si hay un número de issue en el mensaje del commit
           if [[ $COMMIT_MESSAGE =~ \#([0-9]+) ]]; then
             ISSUE_NUMBER="${BASH_REMATCH[1]}"
-            ISSUE_FIELD=',{
-              "name": "📌 Issue",
-              "value": "#'"$ISSUE_NUMBER"'",
-              "inline": true
-            }'
+            ISSUE_FIELD=',"value": "📌 #'"$ISSUE_NUMBER"'"'
           else
-            ISSUE_FIELD=""
+            ISSUE_FIELD=''
           fi
 
           JSON_PAYLOAD=$(cat <<EOF
           {
             "embeds": [{
-              "title": "📁 Repositorio: $REPO_NAME",
+              "title": "📂 Repositorio: $REPO_NAME",
               "url": "$COMMIT_URL",
               "color": $BRANCH_COLOR,
               "fields": [
                 {
                   "name": "💬 Mensaje del commit",
-                  "value": "\`\`\`$COMMIT_MESSAGE\`\`\`"
+                  "value": "$COMMIT_MESSAGE"
                 },
                 {
-                  "name": "🌿 Rama",
-                  "value": "\`$BRANCH\`",
-                  "inline": true
-                },
-                {
-                  "name": "👤 Autor",
-                  "value": "$AUTHOR",
-                  "inline": true
+                  "name": "\u200b",
+                  "value": "🌿 \`$BRANCH\`     👤 $AUTHOR$ISSUE_FIELD",
+                  "inline": false
                 }
-                $ISSUE_FIELD
               ],
               "author": {
                 "name": "$AUTHOR",
                 "icon_url": "https://github.com/$AUTHOR_USERNAME.png"
               },
               "footer": {
-                "text": "GitHub Actions",
+                "text": "GitHub Actions • $TIMESTAMP",
                 "icon_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
-              },
-              "timestamp": "$TIMESTAMP"
+              }
             }]
           }
           EOF
