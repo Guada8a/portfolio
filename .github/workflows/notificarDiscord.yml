@@ -1,0 +1,80 @@
+name: Discord Notification
+
+on:
+  push:
+    branches:
+      - "*"
+
+jobs:
+  send_notification:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Extract commit information and send Discord message
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        run: |
+          COMMIT_MESSAGE=$(git log -1 --pretty=%B)
+          AUTHOR=$(git log -1 --pretty=format:'%an')
+          BRANCH=$(echo ${{ github.ref }} | awk -F'/' '{print $NF}')
+          REPO_NAME=$(echo ${{ github.repository }} | awk -F'/' '{print $NF}')
+
+          ISSUE_TEXT=""
+          if [[ $COMMIT_MESSAGE =~ \#([0-9]+) ]]; then
+            ISSUE_TEXT=" en el issue"
+            if [[ $(echo $COMMIT_MESSAGE | grep -o '#' | wc -l) -gt 1 ]]; then
+              ISSUE_TEXT=" con ref. en los issues"
+            fi
+            while [[ $COMMIT_MESSAGE =~ \#([0-9]+) ]]; do
+              ISSUE_NUMBER="${BASH_REMATCH[1]}"
+              if [[ -z $ISSUE_TEXT ]]; then
+                ISSUE_TEXT="#$ISSUE_NUMBER"
+              else
+                ISSUE_TEXT="$ISSUE_TEXT #$ISSUE_NUMBER"
+              fi
+              COMMIT_MESSAGE=${COMMIT_MESSAGE#*#}
+            done
+          fi
+
+          if [[ $BRANCH == "pre" ]]; then
+            MESSAGE="$AUTHOR subió cambios a PRE"
+          elif [[ $BRANCH == "dev" ]]; then
+            MESSAGE="Los cambios están en $BRANCH"
+          else
+            if [[ -n $ISSUE_TEXT ]]; then
+              MESSAGE="$AUTHOR subió cambios$ISSUE_TEXT en la rama $BRANCH"
+            else
+              MESSAGE="$AUTHOR subió cambios en la rama $BRANCH"
+            fi
+          fi
+
+          JSON_PAYLOAD=$(cat <<EOF
+          {
+            "embeds": [{
+              "title": "$REPO_NAME: Nuevo commit",
+              "description": "$MESSAGE",
+              "color": 3447003,
+              "fields": [
+                {
+                  "name": "Mensaje del commit",
+                  "value": "$COMMIT_MESSAGE"
+                },
+                {
+                  "name": "Autor",
+                  "value": "$AUTHOR",
+                  "inline": true
+                },
+                {
+                  "name": "Rama",
+                  "value": "$BRANCH",
+                  "inline": true
+                }
+              ]
+            }]
+          }
+          EOF
+          )
+
+          curl -H "Content-Type: application/json" -d "$JSON_PAYLOAD" $DISCORD_WEBHOOK
