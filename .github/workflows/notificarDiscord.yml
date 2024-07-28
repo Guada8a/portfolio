@@ -44,8 +44,7 @@ jobs:
           JSON_PAYLOAD=$(cat <<EOF
           {
             "embeds": [{
-              "title": "**Repositorio:**",
-              "description": "**$REPO_NAME**",
+              "title": "**$REPO_NAME**",
               "url": "$COMMIT_URL",
               "color": $BRANCH_COLOR,
               "fields": [
@@ -60,7 +59,7 @@ jobs:
                 },
                 {
                   "name": ":bust_in_silhouette: Autor",
-                  "value": "$AUTHOR",
+                  "value": "\`$AUTHOR\`",
                   "inline": true
                 }
                 $ISSUE_FIELD
