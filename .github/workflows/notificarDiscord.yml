@@ -30,13 +30,12 @@ jobs:
           }
 
           BRANCH_COLOR=$(generate_color "$BRANCH")
-          REPO_COLOR=$(generate_color "$REPO_NAME")
 
           # Detectar si hay un número de issue en el mensaje del commit
           if [[ $COMMIT_MESSAGE =~ \#([0-9]+) ]]; then
             ISSUE_NUMBER="${BASH_REMATCH[1]}"
             ISSUE_FIELD=',{
-              "name": "Issue",
+              "name": "📌 Issue",
               "value": "#'"$ISSUE_NUMBER"'",
               "inline": true
             }'
@@ -47,25 +46,21 @@ jobs:
           JSON_PAYLOAD=$(cat <<EOF
           {
             "embeds": [{
-              "title": "Repositorio: \`\`\`ansi\n[0;30;43m $REPO_NAME \u001b[0m\`\`\`",
+              "title": "📁 Repositorio: $REPO_NAME",
               "url": "$COMMIT_URL",
               "color": $BRANCH_COLOR,
               "fields": [
                 {
-                  "name": "Mensaje del commit",
+                  "name": "💬 Mensaje del commit",
                   "value": "\`\`\`$COMMIT_MESSAGE\`\`\`"
                 },
                 {
-                  "name": "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬",
-                  "value": "\u200b"
-                },
-                {
-                  "name": "Rama",
+                  "name": "🌿 Rama",
                   "value": "\`$BRANCH\`",
                   "inline": true
                 },
                 {
-                  "name": "Autor",
+                  "name": "👤 Autor",
                   "value": "$AUTHOR",
                   "inline": true
                 }
