@@ -29,25 +29,73 @@ const { description, title } = Astro.props;
         <Footer />
     </body>
 </html>
+
+<script>
+    // Theme detection and handling
+    const theme = (() => {
+        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+            return localStorage.getItem('theme');
+        }
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            return 'dark';
+        }
+        return 'light';
+    })();
+
+    if (theme === 'light') {
+        document.documentElement.classList.remove('dark');
+    } else {
+        document.documentElement.classList.add('dark');
+    }
+
+    
+
+    // Listen for theme changes
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        const newTheme = e.matches ? 'dark' : 'light';
+        if (newTheme === 'dark') {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+        window.localStorage.setItem('theme', newTheme);
+    });
+</script>
+
 <style is:global>
     :root {
-        color-scheme: dark;
+        color-scheme: light dark;
     }
+    
     html {
         font-family: 'Onest Variable', system-ui, sans-serif;
         scroll-behavior: smooth;
     }
+    
     body {
-        background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
-        color: #fff;
+        background: var(--bg-gradient);
+        color: var(--text-color);
         display: flex;
         flex-direction: column;
         min-height: 100vh;
         margin: 0;
         position: relative;
         overflow-x: hidden;
+        transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
     }
 
+    /* Theme variables */
+    :root {
+        --bg-gradient: radial-gradient(ellipse at bottom, #ffffff 0%, #f0f0f0 100%);
+        --text-color: #000000;
+    }
+
+    :root.dark {
+        --bg-gradient: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+        --text-color: #ffffff;
+    }
+
+    /* Stars animation */
     #stars, #stars2, #stars3 {
         position: fixed;
         top: 0;
@@ -56,6 +104,14 @@ const { description, title } = Astro.props;
         bottom: 0;
         z-index: -1;
         overflow: hidden;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    .dark #stars,
+    .dark #stars2,
+    .dark #stars3 {
+        opacity: 1;
     }
 
     #stars {
@@ -95,8 +151,14 @@ const { description, title } = Astro.props;
         html {
             scroll-behavior: auto;
         }
+        
+        body {
+            transition: none;
+        }
+        
         #stars, #stars2, #stars3 {
             animation: none;
+            transition: none;
         }
     }
 </style>

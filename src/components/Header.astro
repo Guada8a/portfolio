@@ -1,73 +1,122 @@
 ---
 import Button from "./icons/Button.astro";
 
-let isOpen = false;
+const menuItems = [
+  { href: "#top", label: "Inicio" },
+  { href: "#about", label: "Sobre mí" },
+  { href: "#experiencia", label: "Experiencia" },
+  { href: "#proyectos", label: "Proyectos" },
+  { href: "#contacto", label: "Contacto" }
+];
 
-function toggleMenu() {
-    isOpen = !isOpen;
-    const menu = document.getElementById('mobile-menu');
-    if (menu) {
-        if (isOpen) {
-            menu.classList.remove('hidden');
-            menu.classList.add('bg-slate-700/20');
-        } else {
-            menu.classList.add('hidden');
-            menu.classList.remove('bg-slate-700/20');
-        }
-    }
-}
+let isOpen = false;
 ---
 
-<header class="sticky top-0 mx-auto backdrop-blur-2xl z-40 w-full">
-    <div class="container mx-auto px-4 py-5 flex justify-between items-center">
-        <a href="#top">
-            <img
-                class="rounded-full size-12"
-                src="https://avatars.githubusercontent.com/u/75002967?v=4"
-                alt="logo"
-            />
-        </a>
-        <button id="menu-button" class="md:hidden text-white">
-            <svg
-                class="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-            >
-                <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
-                ></path>
-            </svg>
-        </button>
-        <nav
-            id="mobile-menu"
-            class="hidden md:flex flex-col md:flex-row gap-4 md:gap-6 text-center absolute md:relative top-16 md:top-0 left-0 md:left-auto right-0 md:right-auto md:bg-transparent md:backdrop-blur-none w-full md:w-auto px-4 md:px-0 py-4 md:py-0"
+<header 
+  id="header" 
+  class="sticky top-0 w-full z-40 flex justify-center"
+>
+  <div class="header-content w-full max-w-7xl transition-all duration-300">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+      <a 
+        href="#top"
+        class="hover:scale-105 transition-transform flex items-center gap-4"
+        aria-label="Ir al inicio"
+      >
+        <img
+          class="rounded-full size-12"
+          src="https://avatars.githubusercontent.com/u/75002967?v=4"
+          alt="Avatar de perfil"
+        />
+        <p class="text-xl font-semibold text-black dark:text-white">José Ochoa</p>
+      </a>
+
+      <button 
+        id="menu-button" 
+        class="md:hidden text-white p-2 hover:bg-white/10 rounded-full transition-colors"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+      >
+        <svg
+          class="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
         >
-            <Button href="#top">Inicio</Button>
-            <Button href="#about">Sobre mí</Button>
-            <Button href="#experiencia">Experiencia</Button>
-            <Button href="#proyectos">Proyectos</Button>
-            <Button href="#contacto">Contacto</Button>
-        </nav>
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
+          />
+        </svg>
+      </button>
+
+      <nav
+        id="mobile-menu"
+        class="hidden md:flex flex-col md:flex-row items-center gap-4 md:gap-6 absolute md:relative top-16 md:top-0 left-0 md:left-auto right-0 md:right-auto w-full md:w-auto px-4 md:px-0 py-4 md:py-0"
+        aria-label="Navegación principal"
+      >
+        {menuItems.map(({href, label}) => (
+          <Button href={href}>{label}</Button>
+        ))}
+      </nav>
     </div>
+  </div>
 </header>
 
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const menuButton = document.getElementById('menu-button');
-        if (menuButton) {
-            menuButton.addEventListener('click', () => {
-                const menu = document.getElementById('mobile-menu');
-                if (menu) {
-                    menu.classList.toggle('hidden');
-                    menu.classList.toggle('bg-slate-700/20');
-                    menu.classList.toggle('backdrop-blur-2xl');
-                }
-            });
-        }
+  const menuButton = document.querySelector('#menu-button') as HTMLButtonElement;
+  const mobileMenu = document.querySelector('#mobile-menu') as HTMLElement;
+  const header = document.querySelector('#header') as HTMLElement;
+
+  // Menu toggle
+  if (menuButton && mobileMenu) {
+    menuButton.addEventListener('click', () => {
+      const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
+      menuButton.setAttribute('aria-expanded', (!isExpanded).toString());
+      
+      mobileMenu.classList.toggle('hidden');
+      mobileMenu.classList.toggle('bg-slate-700/20');
+      mobileMenu.classList.toggle('backdrop-blur-2xl');
     });
+  }
+
+  // Scroll effect with debounce
+  let timeout: number;
+  const SCROLL_THRESHOLD = 100;
+  
+  const handleScroll = () => {
+    if (timeout) {
+      window.cancelAnimationFrame(timeout);
+    }
+
+    timeout = window.requestAnimationFrame(() => {
+      header.classList.toggle('floating', window.scrollY > SCROLL_THRESHOLD);
+    });
+  };
+
+  window.addEventListener('scroll', handleScroll, { passive: true });
 </script>
+
+<style>
+  #header nav {
+    @apply  backdrop-blur-lg;
+  }
+
+  #header.floating .header-content {
+    @apply mx-4 lg:mx-8 my-2;
+  }
+
+  #header.floating .container {
+    @apply backdrop-blur-2xl rounded-full border border-white/10;
+    box-shadow: 0 4px 20px rgb(0 0 0 / 0.1);
+  }
+
+  @media (max-width: 768px) {
+    #mobile-menu:not(.hidden) {
+      @apply bg-slate-950/50 backdrop-blur-lg rounded-2xl mt-2;
+    }
+  }
+</style>

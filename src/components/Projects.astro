@@ -83,48 +83,39 @@ const PROJECTS = [
 
 ---
 
-{
-    PROJECTS.map(({ image, title, description, tags, github, link }) => (
-        <article class="mb-10">
-            <h2 class="text-xl font-bold text-purple-300 mb-2">{title}</h2>
-            <img src={image} alt={title} class="rounded shadow-2xl shadow-white/20 mb-2" />
-            <p class="text-lg mt-4 text-pretty">{description}</p>
-            Tags:
-            <div class="flex flex-wrap gap-2 mt-5 justify-center mb-5">
-                {tags.map((tag) => (
-                    <div class={`flex gap-x-2 text-xs rounded-md px-2 py-1 items-center ${tag.class} shadow-sm`}>
-                        <tag.icon class="size-4" />{tag.name}
-                    </div>
-                ))}
-            </div>
-            {link !== "" && github !== "" ? (
-                <div class="flex gap-x-4">
-                    <SocialIcons href={link} class="w-1/2">
-                        <CodeIcon class="size-6" />
-                        Ver Proyecto
-                    </SocialIcons>
-                    <SocialIcons href={github} class="w-1/2">
-                        <Github class="size-6" />
-                        Ver Repositorio
-                    </SocialIcons>
-                </div>
-            ) : (
-                <>
-                    {link !== "" && (
-                        <SocialIcons href={link}>
-                            <CodeIcon class="size-6" />
-                            Ver Proyecto
-                        </SocialIcons>
-                    )}
-                    {github !== "" && (
-                        <SocialIcons href={github}>
-                            <Github class="size-6" />
-                            Ver Repositorio
-                        </SocialIcons>
-                    )}
-                </>
-            )}
-        </article>
-    ))
-}
-
+<!-- In your Projects.astro component -->
+<div class="grid gap-6">
+  {PROJECTS.map((project) => (
+      <article class="flex flex-col gap-4">
+          <h3 class="text-xl font-semibold">{project.title}</h3>
+          <img 
+              src={project.image} 
+              alt={project.title}
+              class="rounded-lg object-cover w-full aspect-video"
+              loading="lazy"
+          />
+          <p class="text-pretty">{project.description}</p>
+          <div class="flex flex-wrap gap-2">
+              {project.tags.map((tag) => (
+                  <span class={`flex items-center gap-2 px-3 py-1 rounded-full text-sm ${tag.class}`}>
+                      <tag.icon class="size-4" />
+                      {tag.name}
+                  </span>
+              ))}
+          </div>
+          <!-- Links -->
+          {project.link && project.github && (
+              <div class="flex gap-4 mt-auto">
+                  <SocialIcons href={project.link} class="flex-1">
+                      <CodeIcon class="size-5" />
+                      Ver Proyecto
+                  </SocialIcons>
+                  <SocialIcons href={project.github} class="flex-1">
+                      <Github class="size-5" />
+                      Ver Código
+                  </SocialIcons>
+              </div>
+          )}
+      </article>
+  ))}
+</div>
