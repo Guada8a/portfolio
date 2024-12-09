@@ -1,0 +1,111 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+export const prerender = true;
+---
+
+<Layout
+  title={"Página no encontrada - José Ochoa"}
+  description="Contrata a José Ochoa para crear tu app web. Desarrollador Web (FrontEnd)"
+>
+  <main class="grid place-content-center p-4 min-h-[calc(100vh-4rem)]">
+    <div class="bento-card max-w-2xl">
+      <div class="error-gradient p-8 text-center">
+        <div class="glitch-container mb-6">
+          <h1 class="glitch text-9xl font-bold" data-text="404">404</h1>
+        </div>
+        
+        <h2 class="text-2xl font-semibold mb-6 animate-fade-up">
+          ¡Ups! Esta página no existe.
+        </h2>
+
+        <p class="text-pretty mb-8 text-base/relaxed opacity-80">
+          Parece que la página que buscas no existe o fue movida a otra ubicación.
+        </p>
+
+        <a 
+          href="/portfolio/"
+          class="inline-flex items-center gap-2 contact-btn"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+          </svg>
+          Volver al inicio
+        </a>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .bento-card {
+    @apply overflow-hidden rounded-3xl 
+           backdrop-blur-xl border border-black/5 dark:border-white/10
+           transition-all duration-300
+           shadow-inner shadow-white/10;
+  }
+
+  .error-gradient {
+    @apply bg-gradient-to-br from-teal-400/20 via-emerald-500/20 to-cyan-600/20
+           dark:from-teal-950 dark:via-emerald-950 dark:to-cyan-950;
+  }
+
+  .contact-btn {
+    @apply px-6 py-3 
+           rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20
+           dark:bg-emerald-400/10 dark:hover:bg-emerald-400/20
+           transition-all duration-300;
+  }
+
+  .glitch {
+    position: relative;
+    animation: glitch 1s linear infinite;
+  }
+
+  .glitch::before,
+  .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: inherit;
+    clip: rect(0, 900px, 0, 0);
+  }
+
+  .glitch::before {
+    left: -2px;
+    text-shadow: 2px 0 #2dd4bf; /* teal-400 */
+    animation: glitch-anim 2s infinite linear alternate-reverse;
+  }
+
+  .glitch::after {
+    left: 2px;
+    text-shadow: -2px 0 #059669; /* emerald-600 */
+    animation: glitch-anim2 3s infinite linear alternate-reverse;
+  }
+
+  @keyframes glitch-anim {
+    0% { clip: rect(64px, 9999px, 98px, 0); }
+    20% { clip: rect(28px, 9999px, 67px, 0); }
+    40% { clip: rect(27px, 9999px, 76px, 0); }
+    60% { clip: rect(82px, 9999px, 85px, 0); }
+    80% { clip: rect(27px, 9999px, 65px, 0); }
+    100% { clip: rect(93px, 9999px, 100px, 0); }
+  }
+
+  @keyframes glitch-anim2 {
+    0% { clip: rect(52px, 9999px, 74px, 0); }
+    20% { clip: rect(45px, 9999px, 55px, 0); }
+    40% { clip: rect(87px, 9999px, 91px, 0); }
+    60% { clip: rect(24px, 9999px, 31px, 0); }
+    80% { clip: rect(35px, 9999px, 46px, 0); }
+    100% { clip: rect(62px, 9999px, 73px, 0); }
+  }
+
+  @keyframes glitch {
+    2%, 64% { transform: translate(2px,0) skew(0deg); }
+    4%, 60% { transform: translate(-2px,0) skew(0deg); }
+    62% { transform: translate(0,0) skew(5deg); }
+  }
+</style>
