@@ -5,7 +5,7 @@ import tailwind from "@astrojs/tailwind";
 // https://astro.build/config
 export default defineConfig({
   integrations: [tailwind()],
-  site: 'https://guada8a.github.io/portfolio',
+  site: 'https://8wada.github.io/portfolio',
   base: '/portfolio/',
   outDir: 'dist',
 });
